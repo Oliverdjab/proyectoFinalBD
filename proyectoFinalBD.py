@@ -639,15 +639,15 @@ def ventana_uniforme():
                     id_colegio=%s
                 WHERE id_pieza=%s
             """, (
-                entry_tipo.get(),
+                #entry_tipo.get(),
                 entry_color.get(),
                 entry_tela.get(),
-                entry_bordado.get(),
+                #entry_bordado.get(),
                 entry_lugar.get(),
                 entry_estampa.get(),
                 entry_mangas.get(),
                 entry_cuello.get(),
-                entry_colegio.get(),
+                #entry_colegio.get(),
                 entry_id.get()
             ))
             conn.commit()
@@ -1059,7 +1059,7 @@ def ventana_factura():
     entry_num = tk.Entry(win)
     entry_num.pack()
 
-    tk.Label(win, text="Fecha (YYYY-MM-DD):").pack()
+    tk.Label(win, text="Fecha De entrega (YYYY-MM-DD):").pack()
     entry_fecha = tk.Entry(win)
     entry_fecha.pack()
 
@@ -1319,8 +1319,8 @@ def ventana_materia_prima():
                 entry_tipo.get(),
                 entry_desc.get(),
                 entry_cant.get(),
-                entry_unidad.get(),
-                entry_nit.get(),
+                #entry_unidad.get(),
+                #entry_nit.get(),
                 entry_cod.get()
             ))
             conn.commit()
