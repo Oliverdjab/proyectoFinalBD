@@ -1041,8 +1041,45 @@ def ventana_pedido():
 
         messagebox.showinfo("OK", "Pedido entregado y factura generada.")
 
+
     tk.Button(win, text="Facturar y Entregar",
             command=facturar_y_entregar, bg="green", fg="white").pack(pady=15)
+    # =====================================================
+    # 4️⃣ VER REGISTROS
+    # =====================================================
+    def ver_facturas():
+        win_ver = tk.Toplevel()
+        win_ver.title("Registros de Facturas")
+        win_ver.geometry("700x400")
+
+        text = tk.Text(win_ver, width=90, height=20)
+        text.pack()
+
+        conn = conectar_bd()
+        if conn is None:
+            return
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM factura")
+            filas = cursor.fetchall()
+
+            text.insert(tk.END, "N° Factura | Fecha | Total | N° Pedido\n")
+            text.insert(tk.END, "-----------------------------------------------\n")
+
+            for f in filas:
+                linea = f"{f[0]} | {f[1]} | {f[2]} | {f[3]}\n"
+                text.insert(tk.END, linea)
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+        finally:
+            cursor.close()
+            conn.close()
+
+        tk.Button(win_ver, text="Volver", command=win_ver.destroy).pack(pady=5)
+
+    tk.Button(win, text="Ver Facturas", command=ver_facturas).pack(pady=5)
 
     # =====================================================
     # 5️⃣ VOLVER
@@ -1393,6 +1430,9 @@ def ventana_materia_prima():
             conn.close()
 
         tk.Button(win_ver, text="Volver", command=win_ver.destroy).pack()
+
+    btn_utiliza = tk.Button(win, text="Utiliza", command=ventana_utiliza)
+    btn_utiliza.pack(pady=10)
 
     tk.Button(win, text="Ver registros", command=ver_mp).pack(pady=5)
 
@@ -1900,8 +1940,52 @@ def ventana_factura_auto():
         finally:
             cursor.close()
             conn.close()
+    
+
+    # =====================================================
+    # 4️⃣ VER REGISTROS
+    # =====================================================
+    def ver_facturas():
+        win_ver = tk.Toplevel()
+        win_ver.title("Registros de Facturas")
+        win_ver.geometry("700x400")
+
+        text = tk.Text(win_ver, width=90, height=20)
+        text.pack()
+
+        conn = conectar_bd()
+        if conn is None:
+            return
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT * FROM factura")
+            filas = cursor.fetchall()
+
+            text.insert(tk.END, "N° Factura | Fecha | Total | N° Pedido\n")
+            text.insert(tk.END, "-----------------------------------------------\n")
+
+            for f in filas:
+                linea = f"{f[0]} | {f[1]} | {f[2]} | {f[3]}\n"
+                text.insert(tk.END, linea)
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+        finally:
+            cursor.close()
+            conn.close()
+
+        
+        tk.Button(win_ver, text="Volver", command=win_ver.destroy).pack(pady=5)
 
     tk.Button(f, text="Crear Factura", command=crear_factura).pack(pady=15)
+
+    tk.Button(f, text="Ver registros", command=ver_facturas).pack(pady=5)
+
+    # =====================================================
+    # 5️⃣ VOLVER
+    # =====================================================    
+
     tk.Button(f, text="Volver", command=f.destroy).pack()
 
 
@@ -1937,18 +2021,6 @@ def ventana_principal(nombre_usuario):
     btn_factura = tk.Button(principal, text="Factura", command=ventana_factura)
     btn_factura.pack(pady=10)
 
-    
-
-    btn_utiliza = tk.Button(principal, text="Utiliza", command=ventana_utiliza)
-    btn_utiliza.pack(pady=10)
-
-
-    
-
-    btn_incluye = tk.Button(principal, text="Incluye", command=ventana_incluye)
-    btn_incluye.pack(pady=10)
-
-    
 
     btn_facturar = tk.Button(principal, text="Facturar Pedido", command=ventana_factura_auto)
     btn_facturar.pack(pady=10)
