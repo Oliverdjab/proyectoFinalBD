@@ -72,6 +72,9 @@ def ventana_materia_prima():
     # 1️⃣ INSERTAR MATERIA PRIMA
     # =====================================================
     def guardar_mp():
+        if combo_tipo.get().strip() == "" or entry_desc.get().strip() == "" or entry_cant.get().strip() == "" or combo_unidad.get().strip() == "" or obtener_id_proveedor() is None:
+            messagebox.showwarning("Aviso", "Todos los campos son obligatorios.")
+            return
         conn = conectar_bd()
         if conn is None:
             return

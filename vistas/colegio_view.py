@@ -130,7 +130,7 @@ def ventana_colegio():
 
 
 # ============================================================================
-#                   VENTANA DE UNIFORMES (COMPLETA, SIN CAMBIOS)
+#                   VENTANA DE UNIFORMES 
 # ============================================================================
 
 def ventana_uniforme():
@@ -157,8 +157,9 @@ def ventana_uniforme():
     entry_color.pack()
 
     tk.Label(win, text="Tipo de tela:").pack()
-    entry_tela = tk.Entry(win)
-    entry_tela.pack()
+    combo_tela = ttk.Combobox(win, state="readonly")
+    combo_tela['values'] = ["Algodón", "Poliéster", "Mezcla", "Lana"]
+    combo_tela.pack()
 
     tk.Label(win, text="Lleva bordado (True/False):").pack()
     combo_bordado = ttk.Combobox(win, state="readonly")
@@ -166,20 +167,27 @@ def ventana_uniforme():
     combo_bordado.pack()
 
     tk.Label(win, text="Lugar del bordado:").pack()
-    entry_lugar = tk.Entry(win)
-    entry_lugar.pack()
+    combo_lugar = ttk.Combobox(win, state="readonly")
+    combo_lugar['values'] = ["True", "False"]
+    combo_lugar.pack()
+
 
     tk.Label(win, text="Tipo de estampado:").pack()
-    entry_estampa = tk.Entry(win)
-    entry_estampa.pack()
+    combo_estampa = ttk.Combobox(win, state="readonly")
+    combo_estampa['values'] = ["Sublimación", "Transfer digital", "Serigrafía"]
+    combo_estampa.pack()
+
 
     tk.Label(win, text="Borde de mangas:").pack()
-    entry_mangas = tk.Entry(win)
-    entry_mangas.pack()
+    combo_mangas = ttk.Combobox(win, state="readonly")
+    combo_mangas['values'] = ["Manga normal", "Manga con ribete", "Manga sin borde", "Manga dobladillo sencillo"]
+    combo_mangas.pack()
+ 
 
     tk.Label(win, text="Borde de cuello:").pack()
-    entry_cuello = tk.Entry(win)
-    entry_cuello.pack()
+    combo_cuello = ttk.Combobox(win, state="readonly")
+    combo_cuello['values'] = ["Cuello redondo", "Cuello en V", "Cuello polo", "Cuello con ribete"]
+    combo_cuello.pack()
 
     # ----- SELECT COLEGIOS -----
     tk.Label(win, text="Colegio:").pack()
@@ -229,12 +237,12 @@ def ventana_uniforme():
             """, (
                 combo_tipo.get(),
                 entry_color.get(),
-                entry_tela.get(),
+                combo_tela.get(),
                 combo_bordado.get(),
-                entry_lugar.get(),
-                entry_estampa.get(),
-                entry_mangas.get(),
-                entry_cuello.get(),
+                combo_lugar.get(),
+                combo_estampa.get(),
+                combo_mangas.get(),
+                combo_cuello.get(),
                 obtener_id_colegio()
             ))
             conn.commit()
@@ -267,12 +275,12 @@ def ventana_uniforme():
             """, (
                 combo_tipo.get(),
                 entry_color.get(),
-                entry_tela.get(),
+                combo_tela.get(),
                 combo_bordado.get(),
-                entry_lugar.get(),
-                entry_estampa.get(),
-                entry_mangas.get(),
-                entry_cuello.get(),
+                combo_lugar.get(),
+                combo_estampa.get(),
+                combo_mangas.get(),
+                combo_cuello.get(),
                 obtener_id_colegio(),
                 entry_id.get()
             ))
