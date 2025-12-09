@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from conexion import conectar_bd
 from vistas.incluye_view import ventana_incluye
 from vistas.utiliza_view import ventana_utiliza
@@ -19,12 +19,14 @@ def ventana_producto():
     entry_descripcion.pack()
 
     tk.Label(win, text="Talla:").pack()
-    entry_talla = tk.Entry(win)
-    entry_talla.pack()
+    combo_talla = ttk.Combobox(win, state="readonly")
+    combo_talla['values'] = ["XS", "S", "M", "L", "XL", "XXL"]
+    combo_talla.pack()
 
     tk.Label(win, text="Sexo:").pack()
-    entry_sexo = tk.Entry(win)
-    entry_sexo.pack()
+    combo_sexo = ttk.Combobox(win, state="readonly")
+    combo_sexo['values'] = ["Masculino", "Femenino", "Unisex"]
+    combo_sexo.pack()
 
     tk.Label(win, text="Precio:").pack()
     entry_precio = tk.Entry(win)
@@ -35,8 +37,10 @@ def ventana_producto():
     entry_existencia.pack()
 
     tk.Label(win, text="Estado:").pack()
-    entry_estado = tk.Entry(win)
-    entry_estado.pack()
+    combo_estado = ttk.Combobox(win, state="readonly")
+    combo_estado['values'] = ["Disponible", "No Disponible", "En producción", "Reservado"]
+    combo_estado.pack()
+    
 
     tk.Label(win, text="ID pieza (uniforme):").pack()
     entry_idpieza = tk.Entry(win)
@@ -47,8 +51,8 @@ def ventana_producto():
     # =========================================================
     def guardar_producto():
         # Validar que no estén vacíos
-        if entry_descripcion.get() == "" or entry_talla.get() == "" or entry_sexo.get() == "" \
-        or entry_precio.get() == "" or entry_existencia.get() == "" or entry_estado.get() == "" \
+        if entry_descripcion.get() == "" or combo_talla.get() == "" or combo_sexo.get() == "" \
+        or entry_precio.get() == "" or entry_existencia.get() == "" or combo_estado.get() == "" \
         or entry_idpieza.get() == "":
             messagebox.showwarning("Aviso", "Todos los campos excepto código son obligatorios.")
             return
@@ -70,11 +74,11 @@ def ventana_producto():
                 VALUES (%s,%s,%s,%s,%s,%s,%s)
             """, (
                 entry_descripcion.get(),
-                entry_talla.get(),
-                entry_sexo.get(),
+                combo_talla.get(),
+                combo_sexo.get(),
                 precio,
                 existencia,
-                entry_estado.get(),
+                combo_estado.get(),
                 id_pieza
             ))
             conn.commit()
@@ -111,8 +115,8 @@ def ventana_producto():
                     existe_cantidad=%s, estado_p=%s, id_pieza=%s
                 WHERE cod_producto=%s
             """, (
-                entry_descripcion.get(), entry_talla.get(), entry_sexo.get(),
-                precio, existencia, entry_estado.get(), id_pieza,
+                entry_descripcion.get(), combo_talla.get(), combo_sexo.get(),
+                precio, existencia, combo_estado.get(), id_pieza,
                 entry_codigo.get()
             ))
             conn.commit()

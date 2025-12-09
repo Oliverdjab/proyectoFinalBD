@@ -15,8 +15,9 @@ def ventana_materia_prima():
     entry_cod.pack()
 
     tk.Label(win, text="Tipo:").pack()
-    entry_tipo = tk.Entry(win)
-    entry_tipo.pack()
+    combo_tipo = ttk.Combobox(win, state="readonly")
+    combo_tipo['values'] = ["telas", "hilos", "botones", "cierres", "agujas", "tijeras", "cinta metrica"]
+    combo_tipo.pack()
 
     tk.Label(win, text="Descripción:").pack()
     entry_desc = tk.Entry(win)
@@ -82,7 +83,7 @@ def ventana_materia_prima():
                                           cantidad, unidad_medida, nit)
                 VALUES (%s, %s, %s, %s, %s)
             """, (
-                entry_tipo.get(),
+                combo_tipo.get(),
                 entry_desc.get(),
                 entry_cant.get(),
                 combo_unidad.get(),
@@ -118,7 +119,7 @@ def ventana_materia_prima():
                     unidad_medida=%s, nit=%s
                 WHERE cod_materia=%s
             """, (
-                entry_tipo.get(),
+                combo_tipo.get(),
                 entry_desc.get(),
                 entry_cant.get(),
                 combo_unidad.get(),

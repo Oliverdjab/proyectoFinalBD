@@ -30,6 +30,7 @@ def ventana_principal(nombre_usuario):
     #tk.Button(principal, text="Factura", command=ventana_factura).pack(pady=10)
     tk.Button(principal, text="Facturar Pedido", command=ventana_facturar_pedido).pack(pady=10)
     tk.Button(principal, text="Ver Facturas", command=ventana_factura).pack(pady=10)
+    tk.Button(principal, text="Informes", command=ventana_factura).pack(pady=10)
 
 
 
