@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from conexion import conectar_bd
 
 def ventana_cambiar_estado():
@@ -12,12 +12,13 @@ def ventana_cambiar_estado():
     entry_num.pack()
 
     tk.Label(win, text="Nuevo Estado:").pack()
-    entry_estado = tk.Entry(win)
-    entry_estado.pack()
+    combo_estado = ttk.Combobox(win, state="readonly")
+    combo_estado['values'] = ["Registrado", "En Proceso", "Listo para entregar", "Entregado"]
+    combo_estado.pack()
 
     # ACTUALIZAR ESTADO
     def cambiar_estado():
-        if entry_num.get() == "" or entry_estado.get() == "":
+        if entry_num.get() == "" or combo_estado.get() == "":
             messagebox.showwarning("Aviso", "Debes llenar ambos campos.")
             return
 
@@ -28,7 +29,7 @@ def ventana_cambiar_estado():
                 UPDATE pedido
                 SET estado=%s
                 WHERE num_pedido=%s
-            """, (entry_estado.get(), entry_num.get()))
+            """, (combo_estado.get(), entry_num.get()))
 
             conn.commit()
             messagebox.showinfo("Éxito", "Estado del pedido actualizado.")

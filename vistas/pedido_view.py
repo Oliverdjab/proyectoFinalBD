@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from conexion import conectar_bd
 from controladora import generar_factura, descontar_inventario
 
@@ -35,8 +35,9 @@ def ventana_pedido():
     entry_abono.pack()
 
     tk.Label(win, text="Estado:").pack()
-    entry_estado = tk.Entry(win)
-    entry_estado.pack()
+    combo_estado = ttk.Combobox(win, state="readonly")
+    combo_estado['values'] = ["Pendiente", "En Proceso", "Listo", "Entregado", "Cancelado"]
+    combo_estado.pack()
 
     tk.Label(win, text="ID Cliente:").pack()
     entry_cliente = tk.Entry(win)
@@ -47,7 +48,7 @@ def ventana_pedido():
     # =====================================================
     def guardar_pedido():
 
-        if entry_fecha_enc.get().strip() == "" or entry_estado.get().strip() == "" or entry_cliente.get().strip() == "":
+        if entry_fecha_enc.get().strip() == "" or combo_estado.get().strip() == "" or entry_cliente.get().strip() == "":
             messagebox.showwarning("Aviso", "Fecha encargo, estado e ID cliente son obligatorios.")
             return
 
@@ -71,7 +72,7 @@ def ventana_pedido():
                 entry_fecha_ent.get(),
                 entry_detalles.get(),
                 abono,
-                entry_estado.get(),
+                combo_estado.get(),
                 entry_cliente.get()
             ))
             conn.commit()
@@ -113,7 +114,7 @@ def ventana_pedido():
                 entry_fecha_ent.get(),
                 entry_detalles.get(),
                 abono,
-                entry_estado.get(),
+                combo_estado.get(),
                 entry_cliente.get(),
                 entry_num.get()
             ))
