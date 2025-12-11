@@ -40,14 +40,14 @@ def ventana_proveedor():
         nombre = entry_nombre.get().strip()
         telefono = entry_telefono.get().strip()
 
-        # Validación obligatoria
-        if nit == "":
-            messagebox.showwarning("Aviso", "El NIT es obligatorio.")
-            return
+        # # Validación obligatoria
+        # if nit == "":
+        #     messagebox.showwarning("Aviso", "El NIT es obligatorio.")
+        #     return
 
-        if not nit.isdigit():
-            messagebox.showwarning("Aviso", "El NIT debe ser un número.")
-            return
+        # if not nit.isdigit():
+        #     messagebox.showwarning("Aviso", "El NIT debe ser un número.")
+        #     return
 
         if nombre == "":
             messagebox.showwarning("Aviso", "El nombre es obligatorio.")
@@ -64,10 +64,9 @@ def ventana_proveedor():
 
         try:
             cursor.execute("""
-                INSERT INTO proveedor (nit, nombre_p, direccion, telefono, nom_contacto)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO proveedor ( nombre_p, direccion, telefono, nom_contacto)
+                VALUES ( %s, %s, %s, %s)
             """, (
-                nit,
                 entry_nombre.get(),
                 entry_direccion.get(),
                 entry_telefono.get(),

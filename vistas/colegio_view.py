@@ -168,7 +168,7 @@ def ventana_uniforme():
 
     tk.Label(win, text="Lugar del bordado:").pack()
     combo_lugar = ttk.Combobox(win, state="readonly")
-    combo_lugar['values'] = ["True", "False"]
+    combo_lugar['values'] = ["Pecho izquierdo", "Espalda", "Manga"]
     combo_lugar.pack()
 
 
