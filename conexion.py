@@ -5,9 +5,9 @@ def conectar_bd():
     try:
         conn = psycopg2.connect(
             host="localhost",
-            database="proyecto final",
+            database="proyecto_final",
             user="postgres",
-            password="oliverarboleda18*"
+            password="admin"
         )
         return conn
     except Exception as e:
