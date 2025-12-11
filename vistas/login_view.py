@@ -3,6 +3,7 @@ from tkinter import messagebox
 from conexion import conectar_bd
 from ventanas_principales.principal_view import ventana_principal
 
+
 def iniciar_sesion(entry_usuario, entry_contra):
     nombre = entry_usuario.get()
     clave = entry_contra.get()
@@ -10,11 +11,12 @@ def iniciar_sesion(entry_usuario, entry_contra):
     conn = conectar_bd()
     if conn is None:
         return
-
     cursor = conn.cursor()
+
     try:
+        # AHORA TAMBIÉN TRAEMOS EL ID_ROL
         cursor.execute(
-            "SELECT contraseña FROM usuario WHERE nombre_usuario = %s",
+            "SELECT contrasena, id_rol FROM usuario WHERE nombre_usuario = %s",
             (nombre,)
         )
         resultado = cursor.fetchone()
@@ -22,10 +24,12 @@ def iniciar_sesion(entry_usuario, entry_contra):
         if resultado is None:
             messagebox.showwarning("Aviso", "El usuario no existe.")
         else:
-            contraseña_correcta = resultado[0]
-            if clave == contraseña_correcta:
-                messagebox.showinfo("Bienvenido", "Inicio de sesión exitoso.")
-                ventana_principal(nombre)
+            contrasena_correcta = resultado[0]
+            id_rol = resultado[1]
+
+            if clave == contrasena_correcta:
+                messagebox.showinfo("Bienvenido", f"Inicio de sesión exitoso.\nRol: {id_rol}")
+                ventana_principal(nombre, id_rol)  # PASAMOS EL ROL A LA VENTANA PRINCIPAL
             else:
                 messagebox.showerror("Error", "Contraseña incorrecta.")
 
@@ -51,7 +55,8 @@ def crear_login():
     entry_contra.pack()
 
     tk.Button(
-        ventana, text="Iniciar Sesión",
+        ventana,
+        text="Iniciar Sesión",
         command=lambda: iniciar_sesion(entry_usuario, entry_contra)
     ).pack(pady=10)
 

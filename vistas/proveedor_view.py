@@ -3,13 +3,15 @@ from tkinter import messagebox
 from conexion import conectar_bd
 from vistas.materia_prima_view import ventana_materia_prima
 
+print(">>> CARGANDO proveedor_view.py DESDE:", __file__)
+
 def ventana_proveedor():
     win = tk.Toplevel()
     win.title("Proveedor - CRUD")
     win.geometry("300x380")
 
     # CAMPOS
-    tk.Label(win, text="NIT (Solo para actualizar o eliminar):").pack()
+    tk.Label(win, text="NIT:").pack()
     entry_nit = tk.Entry(win)
     entry_nit.pack()
 
@@ -32,13 +34,27 @@ def ventana_proveedor():
     # ---------------------------------
     # 1️⃣ INSERTAR PROVEEDOR
     # ---------------------------------
+    print("USANDO EL ARCHIVO CORRECTO DE PROVEEDOR")
     def guardar_proveedor():
+        nit = entry_nit.get().strip()
         nombre = entry_nombre.get().strip()
         telefono = entry_telefono.get().strip()
 
-        # Validación obligatoria
-        if nombre == "" or telefono == "":
-            messagebox.showwarning("Aviso", "Nombre y Teléfono son obligatorios.")
+        # # Validación obligatoria
+        # if nit == "":
+        #     messagebox.showwarning("Aviso", "El NIT es obligatorio.")
+        #     return
+
+        # if not nit.isdigit():
+        #     messagebox.showwarning("Aviso", "El NIT debe ser un número.")
+        #     return
+
+        if nombre == "":
+            messagebox.showwarning("Aviso", "El nombre es obligatorio.")
+            return
+
+        if telefono == "":
+            messagebox.showwarning("Aviso", "El teléfono es obligatorio.")
             return
 
         conn = conectar_bd()
@@ -48,8 +64,8 @@ def ventana_proveedor():
 
         try:
             cursor.execute("""
-                INSERT INTO proveedor(nombre_p, direccion, telefono, nom_contacto)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO proveedor ( nombre_p, direccion, telefono, nom_contacto)
+                VALUES ( %s, %s, %s, %s)
             """, (
                 entry_nombre.get(),
                 entry_direccion.get(),
@@ -70,15 +86,10 @@ def ventana_proveedor():
     # 2️⃣ ACTUALIZAR PROVEEDOR
     # ---------------------------------
     def actualizar_proveedor():
-        if entry_nit.get() == "":
+        nit = entry_nit.get().strip()
+
+        if nit == "":
             messagebox.showwarning("Aviso", "Debes escribir el NIT.")
-            return
-
-        nombre = entry_nombre.get().strip()
-        telefono = entry_telefono.get().strip()
-
-        if nombre == "" or telefono == "":
-            messagebox.showwarning("Aviso", "Nombre y Teléfono no pueden estar vacíos.")
             return
 
         conn = conectar_bd()
@@ -99,7 +110,7 @@ def ventana_proveedor():
                 entry_direccion.get(),
                 entry_telefono.get(),
                 entry_contacto.get(),
-                entry_nit.get()
+                nit
             ))
             conn.commit()
             messagebox.showinfo("Éxito", "Proveedor actualizado correctamente.")
@@ -174,7 +185,7 @@ def ventana_proveedor():
     tk.Button(win, text="Ver registros", command=ver_registros_proveedor).pack(pady=5)
 
     # ------------------------------
-    # 5️⃣ BOTÓN MATERIA PRIMA (RESTAURADO)
+    # 5️⃣ MATERIA PRIMA
     # ------------------------------
     tk.Button(win, text="Materia Prima", command=ventana_materia_prima).pack(pady=5)
 
