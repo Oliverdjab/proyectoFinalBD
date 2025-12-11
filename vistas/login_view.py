@@ -14,7 +14,7 @@ def iniciar_sesion(entry_usuario, entry_contra):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "SELECT contraseña FROM usuario WHERE nombre_usuario = %s",
+            "SELECT contrasena FROM usuario WHERE nombre_usuario = %s",
             (nombre,)
         )
         resultado = cursor.fetchone()
@@ -22,8 +22,8 @@ def iniciar_sesion(entry_usuario, entry_contra):
         if resultado is None:
             messagebox.showwarning("Aviso", "El usuario no existe.")
         else:
-            contraseña_correcta = resultado[0]
-            if clave == contraseña_correcta:
+            contrasena_correcta = resultado[0]
+            if clave == contrasena_correcta:
                 messagebox.showinfo("Bienvenido", "Inicio de sesión exitoso.")
                 ventana_principal(nombre)
             else:

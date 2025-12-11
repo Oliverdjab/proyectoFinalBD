@@ -7,6 +7,7 @@ from vistas.producto_view import ventana_producto
 from vistas.pedido_view import ventana_pedido
 from vistas.cambiar_estado_view import ventana_cambiar_estado
 from vistas.factura_view import ventana_factura, ventana_facturar_pedido
+from vistas.informes_view import ventana_informes
 #from factura_view import ventana_factura, ventana_facturar_pedido
 
 #from vistas.factura_view import ventana_factura_auto  # si la usas así
@@ -30,7 +31,7 @@ def ventana_principal(nombre_usuario):
     #tk.Button(principal, text="Factura", command=ventana_factura).pack(pady=10)
     tk.Button(principal, text="Facturar Pedido", command=ventana_facturar_pedido).pack(pady=10)
     tk.Button(principal, text="Ver Facturas", command=ventana_factura).pack(pady=10)
-    tk.Button(principal, text="Informes", command=ventana_factura).pack(pady=10)
+    tk.Button(principal, text="Informes", command=ventana_informes).pack(pady=10)
 
 
 
